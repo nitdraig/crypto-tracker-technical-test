@@ -27,8 +27,10 @@ const App: React.FC = () => {
           <Route path="/" element={<IndexView />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<DashboardView />} />
-          <Route element={<ProtectedRoute element={<DashboardView />} />} />
+          <Route
+            path="/dashboard"
+            element={<ProtectedRoute element={<DashboardView />} />}
+          />
         </Routes>
       </Router>
     </AuthProvider>

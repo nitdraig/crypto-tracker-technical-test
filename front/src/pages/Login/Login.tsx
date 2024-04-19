@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useAuth } from "../../services/Auth";
 import { Navigate } from "react-router-dom";
+import Modal from "../../components/ModalLogin";
 
 const LoginForm = styled.form`
   max-width: 300px;
@@ -38,13 +39,19 @@ const Button = styled.button`
 `;
 
 const Title = styled.h3`
+  font-size: 1.75em;
   text-align: center;
   margin-bottom: 20px;
 `;
-
+const SubTitle = styled.h4`
+  font-size: 1em;
+  text-align: center;
+  margin-bottom: 20px;
+`;
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const [redirectToDashboard, setRedirectToDashboard] = useState(false);
   const { setToken } = useAuth();
 
@@ -63,9 +70,11 @@ const Login: React.FC = () => {
         setToken(token);
         setRedirectToDashboard(true);
       } else {
+        setShowErrorModal(true);
         console.error("Error de inicio de sesión");
       }
     } catch (error) {
+      setShowErrorModal(true);
       console.error("Error:", error);
     }
   };
@@ -75,30 +84,39 @@ const Login: React.FC = () => {
   }
 
   return (
-    <LoginForm onSubmit={handleSubmit}>
-      <Title>Iniciar sesión</Title>
-      <FormGroup>
-        <Label htmlFor="username">Usuario:</Label>
-        <Input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label htmlFor="password">Contraseña:</Label>
-        <Input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </FormGroup>
-      <Button type="submit">Iniciar sesión</Button>
-    </LoginForm>
+    <>
+      <LoginForm onSubmit={handleSubmit}>
+        <Title>Iniciar sesión</Title>
+        <SubTitle>Y podrás acceder al dashboard</SubTitle>
+        <FormGroup>
+          <Label htmlFor="username">Usuario:</Label>
+          <Input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="password">Contraseña:</Label>
+          <Input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </FormGroup>
+        <Button type="submit">Iniciar sesión</Button>
+      </LoginForm>
+
+      {showErrorModal && (
+        <Modal onClose={() => setShowErrorModal(false)}>
+          Error: Nombre de usuario o contraseña incorrectos
+        </Modal>
+      )}
+    </>
   );
 };
 

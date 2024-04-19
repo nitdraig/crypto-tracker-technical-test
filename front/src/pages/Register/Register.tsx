@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Navigate } from "react-router-dom";
+import { ModalRegister } from "../../components/ModalRegister";
 
 const RegisterForm = styled.form`
   max-width: 300px;
@@ -37,26 +38,15 @@ const Button = styled.button`
 `;
 
 const Title = styled.h3`
+  font-size: 1.75em;
   text-align: center;
   margin-bottom: 20px;
 `;
 
-const Modal = styled.div`
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalContent = styled.div`
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
+const SubTitle = styled.h4`
+  font-size: 1em;
+  text-align: center;
+  margin-bottom: 20px;
 `;
 
 const Register: React.FC = () => {
@@ -100,6 +90,7 @@ const Register: React.FC = () => {
     <>
       <RegisterForm onSubmit={handleSubmit}>
         <Title>Registro</Title>
+        <SubTitle>Y podrás iniciar sesión</SubTitle>
         <FormGroup>
           <Label htmlFor="username">Nombre de usuario:</Label>
           <Input
@@ -122,14 +113,7 @@ const Register: React.FC = () => {
         </FormGroup>
         <Button type="submit">Registrar</Button>
       </RegisterForm>
-      {showModal && (
-        <Modal>
-          <ModalContent>
-            <p>¡Usuario creado correctamente!</p>
-            <Button onClick={handleModalClose}>Cerrar</Button>
-          </ModalContent>
-        </Modal>
-      )}
+      {showModal && <ModalRegister handleModalClose={handleModalClose} />}
     </>
   );
 };

@@ -4,7 +4,7 @@ import styled from "styled-components";
 const NavBar = styled.nav`
   margin-top: -1em;
   margin-left: -1em;
-  width: 100%;
+
   background-color: #333;
   padding: 10px 20px;
   color: white;
