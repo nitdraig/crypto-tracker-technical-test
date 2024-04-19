@@ -1,9 +1,8 @@
-
-# Crypto Tracker | Prueba Fullstack
+# Crypto Tracker | Prueba técnica Fullstack Developer - Zergex
 
 ## Aclaraciones:
 + Busqué crear una arquitectura similar en back y front.
-+ Para poder inicar ambas partes se debe tener instalado Node.js y PostgreSQL.
++ Para poder iniciar ambas partes se debe tener instalado Node.js y PostgreSQL.
 + Use React+Vite, implementando una arquitectura de carpetas basado en un dividir la app en secciones claras y los componentes grandes en pequeños componentes cuya configuración esta hecha con Typescript, usé StyledComponents para los estilos. Traté no usar liberías externas que podría haber hecho una interfaz más trabajada y llamativa, prioricé la semántica y el desarrollo de los componentes de forma responsive.
 + Dado que es un proyecto simple y sin posibilidades de filtración, decidí obviar la creación de dotenv. Cosa que por buenas prácticas no haría.
 + Personalmente haría mejoras del apartado gráfico, a nivel técnico lo siento bastante robusto, seguramente habrá alguna mejora o sugerencia.
