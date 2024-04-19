@@ -52,34 +52,19 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showErrorModal, setShowErrorModal] = useState(false);
-  const [redirectToDashboard, setRedirectToDashboard] = useState(false);
-  const { setToken } = useAuth();
+  const { login, isAuthenticated } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      if (response.ok) {
-        const { token } = await response.json();
-        setToken(token);
-        setRedirectToDashboard(true);
-      } else {
-        setShowErrorModal(true);
-        console.error("Error de inicio de sesión");
-      }
+      await login(username, password);
     } catch (error) {
       setShowErrorModal(true);
-      console.error("Error:", error);
+      console.error("Error de inicio de sesión:", error);
     }
   };
 
-  if (redirectToDashboard) {
+  if (isAuthenticated) {
     return <Navigate to="/dashboard" />;
   }
 

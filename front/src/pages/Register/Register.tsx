@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useAuth } from "../../services/Auth";
 import { Navigate } from "react-router-dom";
 import { ModalRegister } from "../../components/ModalRegister";
 
@@ -54,26 +55,17 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
+  const { register } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      if (response.ok) {
-        setShowModal(true);
-        setUsername("");
-        setPassword("");
-      } else {
-        console.error("Error de registro");
-      }
+      await register(username, password);
+      setShowModal(true);
+      setUsername("");
+      setPassword("");
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error de registro:", error);
     }
   };
 

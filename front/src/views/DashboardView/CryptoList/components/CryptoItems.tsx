@@ -55,10 +55,10 @@ const CryptoItem: React.FC<CryptoItemProps> = ({
         {crypto.purchasePrice} | Cantidad: {crypto.quantity} |
       </div>
       <div>
+        <CryptoButton2 onClick={() => onEdit(crypto)}>Actualizar</CryptoButton2>
         <CryptoButton1 onClick={() => onDelete(crypto.id)}>
-          Delete
+          Borrar
         </CryptoButton1>
-        <CryptoButton2 onClick={() => onEdit(crypto)}>Update</CryptoButton2>
       </div>
     </CryptoInfo>
   </CryptoListItem>

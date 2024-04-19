@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../services/Auth";
+
 const NavBar = styled.nav`
   margin-top: -1em;
   margin-left: -1em;
@@ -62,9 +65,16 @@ const MenuButton = styled.button`
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isAuthenticated, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    // Redirige al usuario a la página de inicio de sesión después de cerrar sesión
+    return <Navigate to="/login" />;
   };
 
   return (
@@ -88,6 +98,13 @@ const Navbar: React.FC = () => {
         <NavItem>
           <NavLink href="/dashboard">Dashboard</NavLink>
         </NavItem>
+        {isAuthenticated && (
+          <NavItem>
+            <NavLink href="#" onClick={handleLogout}>
+              Cerrar sesión
+            </NavLink>
+          </NavItem>
+        )}
       </NavItems>
     </NavBar>
   );

@@ -36,7 +36,24 @@ const Title = styled.h3`
     font-size: 1.5rem;
   }
 `;
+const TitleEdit = styled.h2`
+  text-align: center;
+  font-size: 1.5rem;
 
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+const SubTitle = styled.h2`
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: blue;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+`;
 interface Crypto {
   id: string;
   name: string;
@@ -89,7 +106,8 @@ const CryptoList: React.FC<CryptoListProps> = ({
       {editingCrypto && (
         <ModalBackground>
           <ModalContainer>
-            <h3>Editando: {editingCrypto.name}</h3>
+            <TitleEdit>Editando: </TitleEdit>
+            <SubTitle> {editingCrypto.name}</SubTitle>
             <EditForm
               crypto={editingCrypto}
               onUpdate={handleUpdate}

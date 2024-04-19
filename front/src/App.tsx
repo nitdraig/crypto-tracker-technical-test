@@ -10,6 +10,8 @@ import { AuthProvider, useAuth } from "./services/Auth";
 import IndexView from "./views/IndexView/IndexView";
 import DashboardView from "./views/DashboardView/DashboardView";
 import Register from "./pages/Register/Register";
+import { QueryClient, QueryClientProvider } from "react-query";
+import Navbar from "./components/Navbar";
 
 const ProtectedRoute: React.FC<{ element: React.ReactElement }> = ({
   element,
@@ -20,20 +22,25 @@ const ProtectedRoute: React.FC<{ element: React.ReactElement }> = ({
 };
 
 const App: React.FC = () => {
+  const queryClient = new QueryClient();
+
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<IndexView />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route
-            path="/dashboard"
-            element={<ProtectedRoute element={<DashboardView />} />}
-          />
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<IndexView />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+              path="/dashboard"
+              element={<ProtectedRoute element={<DashboardView />} />}
+            />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };
 

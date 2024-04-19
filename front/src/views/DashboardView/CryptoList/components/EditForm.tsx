@@ -53,6 +53,23 @@ const Button = styled.button`
   }
 `;
 
+const ButtonCancel = styled.button`
+  padding: 8px 16px;
+  border: none;
+  border-radius: 3px;
+  background-color: #ff0040;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #b3001e;
+  }
+
+  @media screen and (max-width: 600px) {
+    padding: 6px 12px;
+  }
+`;
+
 interface Crypto {
   id: string;
   name: string;
@@ -126,9 +143,9 @@ const EditForm: React.FC<EditFormProps> = ({ crypto, onUpdate, onCancel }) => {
         />
       </FormGroup>
       <Button type="submit">Guardar</Button>
-      <Button type="button" onClick={onCancel}>
+      <ButtonCancel type="button" onClick={onCancel}>
         Cancelar
-      </Button>
+      </ButtonCancel>
     </FormContainer>
   );
 };
