@@ -4,15 +4,35 @@ import CryptoForm from "../CryptoForm/CryptoForm";
 import CryptoList from "../CryptoList/CryptoList";
 import { useAuth } from "../../../services/Auth";
 
+interface Crypto {
+  id: string;
+  name: string;
+  ticker: string;
+  purchasePrice: number;
+  quantity: number;
+}
+
 const DashboardContainer = styled.div`
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
+
+  @media screen and (max-width: 768px) {
+    padding: 0 20px;
+  }
 `;
 
+const Title = styled.h2`
+  text-align: center;
+  margin-bottom: 20px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
 const Dashboard: React.FC = () => {
   const { token } = useAuth();
-  const [cryptos, setCryptos] = useState([]);
-  console.log(token);
+  const [cryptos, setCryptos] = useState<Crypto[]>([]);
+
   useEffect(() => {
     fetchCryptos();
   }, []);
@@ -26,14 +46,19 @@ const Dashboard: React.FC = () => {
           Authorization: `${token}`,
         },
       });
-      const data = await response.json();
+      const data: Crypto[] = await response.json();
       setCryptos(data);
     } catch (error) {
       console.error("Error al obtener criptomonedas:", error);
     }
   };
 
-  const handleAddCrypto = async (newCrypto) => {
+  const handleAddCrypto = async (newCrypto: {
+    name: string;
+    ticker: string;
+    purchasePrice: number;
+    quantity: number;
+  }) => {
     try {
       const response = await fetch("http://localhost:5000/crypto/new", {
         method: "POST",
@@ -49,7 +74,8 @@ const Dashboard: React.FC = () => {
       console.error("Error al agregar criptomoneda:", error);
     }
   };
-  const handleDeleteCrypto = async (cryptoId) => {
+
+  const handleDeleteCrypto = async (cryptoId: string) => {
     try {
       const response = await fetch(
         `http://localhost:5000/crypto/mycrypto/${cryptoId}`,
@@ -63,15 +89,19 @@ const Dashboard: React.FC = () => {
       );
       await response.json();
 
-      setCryptos(cryptos.filter((crypto) => crypto._id !== cryptoId));
+      setCryptos(cryptos.filter((crypto) => crypto.id !== cryptoId));
     } catch (error) {
       console.error("Error al borrar criptomoneda:", error);
     }
   };
-  const handleUpdateCrypto = async (updatedCrypto) => {
+
+  const handleUpdateCrypto = async (
+    cryptoId: string,
+    updatedCrypto: Crypto
+  ) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/crypto/mycrypto/${updatedCrypto._id}`,
+        `http://localhost:5000/crypto/mycrypto/${cryptoId}`,
         {
           method: "PUT",
           headers: {
@@ -81,16 +111,13 @@ const Dashboard: React.FC = () => {
           body: JSON.stringify(updatedCrypto),
         }
       );
+
+      if (!response.ok) {
+        throw new Error("Failed to update crypto");
+      }
+
       await response.json();
-      // Actualizar la lista de criptomonedas
-      const updatedCryptos = cryptos.map((crypto) => {
-        if (crypto._id === updatedCrypto._id) {
-          return updatedCrypto;
-        } else {
-          return crypto;
-        }
-      });
-      setCryptos(updatedCryptos);
+      fetchCryptos();
     } catch (error) {
       console.error("Error al actualizar criptomoneda:", error);
     }
@@ -98,7 +125,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <DashboardContainer>
-      <h2>Dashboard</h2>
+      <Title>Dashboard</Title>
       <CryptoForm onSubmit={handleAddCrypto} />
       <CryptoList
         cryptos={cryptos}

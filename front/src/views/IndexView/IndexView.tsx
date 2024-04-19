@@ -17,11 +17,21 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-const Button = styled(Link)`
+const ButtonLogin = styled(Link)`
   display: inline-block;
   padding: 10px 20px;
   margin: 0 10px;
-  background-color: #007bff;
+  background-color: #0044ff;
+  color: #fff9f9;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+`;
+const ButtonRegister = styled(Link)`
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 0 10px;
+  background-color: #00fff2;
   color: #000000;
   text-decoration: none;
   border-radius: 5px;
@@ -30,17 +40,19 @@ const Button = styled(Link)`
 
 const IndexView: React.FC = () => {
   return (
-    <IndexContainer>
-      <h2>Bienvenido a Crypto Tracker</h2>
-      <Presentation>
-        <p>¡Hola! Esta es una aplicación para rastrear tus criptomonedas.</p>
-        <p>Regístrate o inicia sesión para comenzar.</p>
-      </Presentation>
-      <ButtonContainer>
-        <Button to="/login">Iniciar sesión</Button>
-        <Button to="/register">Registrarse</Button>
-      </ButtonContainer>
-    </IndexContainer>
+    <>
+      <IndexContainer>
+        <h2>Bienvenido a Crypto Tracker</h2>
+        <Presentation>
+          <p>¡Hola! Esta es una aplicación para rastrear tus criptomonedas.</p>
+          <p>Regístrate o inicia sesión para comenzar.</p>
+        </Presentation>
+        <ButtonContainer>
+          <ButtonLogin to="/login">Iniciar sesión</ButtonLogin>
+          <ButtonRegister to="/register">Registrarse</ButtonRegister>
+        </ButtonContainer>
+      </IndexContainer>
+    </>
   );
 };
 

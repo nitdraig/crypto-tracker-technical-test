@@ -33,6 +33,11 @@ const Button = styled.button`
   font-size: 16px;
 `;
 
+const Title = styled.h3`
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -67,6 +72,7 @@ const Login: React.FC = () => {
 
   return (
     <LoginForm onSubmit={handleSubmit}>
+      <Title>Iniciar sesión</Title>
       <FormGroup>
         <Label htmlFor="username">Usuario:</Label>
         <Input

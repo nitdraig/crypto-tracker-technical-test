@@ -1,8 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import CryptoItem from "./components/CryptoItems";
+import EditForm from "./components/EditForm";
+
+const ModalContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  z-index: 1000;
+
+  @media screen and (max-width: 768px) {
+    padding: 30px;
+  }
+`;
+
+const ModalBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+`;
+
+const ListContainer = styled.div`
+  margin-bottom: 20px;
+`;
+
+const Title = styled.h3`
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
 
 interface Crypto {
-  id: number;
+  id: string;
   name: string;
   ticker: string;
   purchasePrice: number;
@@ -11,57 +47,59 @@ interface Crypto {
 
 interface CryptoListProps {
   cryptos: Crypto[];
-  onDelete: (index: number) => void;
-  onUpdate: (index: number) => void;
+  onDelete: (id: string) => void;
+  onUpdate: (id: string, updatedCrypto: Crypto) => void;
 }
-
-const CryptoListItem = styled.li`
-  margin-bottom: 10px;
-`;
-
-const CryptoInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const CryptoButton = styled.button`
-  margin-left: 10px;
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-`;
 
 const CryptoList: React.FC<CryptoListProps> = ({
   cryptos,
   onDelete,
   onUpdate,
-}) => (
-  <div>
-    <h3>Cryptos:</h3>
-    <ul>
-      {cryptos.map((crypto) => (
-        <CryptoListItem key={crypto.id}>
-          <CryptoInfo>
-            <div>
-              Nombre:{crypto.name} | Tiker:({crypto.ticker}) | Precio -
-              {crypto.purchasePrice} | Cantidad - {crypto.quantity} |
-            </div>
-            <div>
-              <CryptoButton onClick={() => onDelete(crypto.id)}>
-                Delete
-              </CryptoButton>
-              <CryptoButton onClick={() => onUpdate(crypto.id)}>
-                Update
-              </CryptoButton>
-            </div>
-          </CryptoInfo>
-        </CryptoListItem>
-      ))}
-    </ul>
-  </div>
-);
+}) => {
+  const [editingCrypto, setEditingCrypto] = useState<Crypto | null>(null);
+
+  const handleEditClick = (crypto: Crypto) => {
+    setEditingCrypto(crypto);
+  };
+
+  const handleUpdate = (updatedCrypto: Crypto) => {
+    if (editingCrypto) {
+      onUpdate(editingCrypto.id, updatedCrypto);
+      setEditingCrypto(null);
+    }
+  };
+
+  const handleCancel = () => {
+    setEditingCrypto(null);
+  };
+
+  return (
+    <ListContainer>
+      <Title>Cryptos:</Title>
+      <ul>
+        {cryptos.map((crypto) => (
+          <CryptoItem
+            key={crypto.id}
+            crypto={crypto}
+            onDelete={onDelete}
+            onEdit={handleEditClick}
+          />
+        ))}
+      </ul>
+      {editingCrypto && (
+        <ModalBackground>
+          <ModalContainer>
+            <h3>Editando: {editingCrypto.name}</h3>
+            <EditForm
+              crypto={editingCrypto}
+              onUpdate={handleUpdate}
+              onCancel={handleCancel}
+            />
+          </ModalContainer>
+        </ModalBackground>
+      )}
+    </ListContainer>
+  );
+};
 
 export default CryptoList;
