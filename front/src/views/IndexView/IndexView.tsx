@@ -37,15 +37,24 @@ const ButtonRegister = styled(Link)`
   border-radius: 5px;
   font-size: 16px;
 `;
+const Title = styled.h2`
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 20px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
 
 const IndexView: React.FC = () => {
   return (
     <>
       <IndexContainer>
-        <h2>Bienvenido a Crypto Tracker</h2>
+        <Title>Bienvenido a Crypto Tracker</Title>
         <Presentation>
-          <p>¡Hola! Esta es una aplicación para rastrear tus criptomonedas.</p>
-          <p>Regístrate o inicia sesión para comenzar.</p>
+          <p>Hola! Esta es una aplicación para guardar tus criptomonedas.</p>
+          <p>Regístrate o inicia sesión para comenzar a usarla.</p>
         </Presentation>
         <ButtonContainer>
           <ButtonLogin to="/login">Iniciar sesión</ButtonLogin>

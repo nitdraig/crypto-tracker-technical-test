@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../services/Auth";
 
 const NavBar = styled.nav`
+  width: 100%;
   margin-top: -1em;
   margin-left: -1em;
 
