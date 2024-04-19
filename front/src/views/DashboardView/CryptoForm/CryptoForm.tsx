@@ -16,13 +16,16 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width: 100%;
+  width: 820px;
   padding: 10px;
   background-color: #007bff;
   color: #fff;
   border: none;
   cursor: pointer;
   font-size: 16px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 interface CryptoFormProps {

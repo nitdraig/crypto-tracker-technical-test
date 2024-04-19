@@ -24,13 +24,17 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+  padding: 10px 20px;
+  margin: 0 10px;
+  background-color: #0044ff;
+  color: #fff9f9;
+  text-decoration: none;
+  border-radius: 5px;
   font-size: 16px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Title = styled.h3`

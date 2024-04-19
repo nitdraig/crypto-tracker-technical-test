@@ -23,13 +23,17 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 0 10px;
+  background-color: #00fff2;
+  color: #000000;
+  text-decoration: none;
+  border-radius: 5px;
   font-size: 16px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Title = styled.h3`
