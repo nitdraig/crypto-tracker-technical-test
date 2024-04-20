@@ -18,3 +18,4 @@
 + No se puede acceder al Dashboard, área donde se hacer el crud, sin iniciar sesión.
 
 
+*Link de tests de pruebas manuales en postman: https://www.postman.com/payload-astronomer-22029507/workspace/cryptotracker/collection/30265373-62102ce9-e988-4845-a722-a3dca8052b9f
